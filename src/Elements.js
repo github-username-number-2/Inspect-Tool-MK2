@@ -164,6 +164,15 @@ export default {
           {
             id: "console",
             type: "div",
+            elements: [
+              {
+                id: "consoleInput",
+                type: "textarea",
+                initialize: element => {
+                  element.setAttribute("spellcheck", "false");
+                },
+              },
+            ],
           },
         ],
       },

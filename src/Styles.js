@@ -9,6 +9,9 @@ main colors:
 
 other colors:
   #70a2ff: lighter blue, used for selected tab underline
+
+main z index 2147483600
+max z index 2147483647
 */
 
 //all classes that will be used for inspect tool
@@ -16,11 +19,11 @@ export default {
   //duplicate ids not allowed
   ids: {
     inspectTool: `
-      display: block !important;
-      z-index: 2147483647 !important;
-      overflow: hidden !important;
-      font: 12px Arial !important;
-      user-select: none !important;
+      display: block;
+      z-index: 2147483600;
+      overflow: hidden;
+      font: 12px Arial;
+      user-select: none;
     `,
 
     topBar: `
@@ -101,36 +104,50 @@ export default {
       top: 2px;
       opacity: 0.8;
     `,
+    consoleInput: `
+      position: absolute;
+      width: 100%;
+      height: calc(100% - 23px);
+      left: 0px;
+      bottom: 0px;
+      margin: 0px;
+      padding: 0px;
+      padding-left: 6px;
+      padding-right: 6px;
+      outline: none;
+      border: none;
+      resize: none;
+    `,
   },
 
   //duplicate classes not allowed
   classes: {
     absolute: `
-      position: absolute !important;
+      position: absolute;
     `,
     relative: `
-      position: relative !important;
+      position: relative;
     `,
     fixed: `
-      position: fixed !important;
+      position: fixed;
     `,
     mainColor: `
-      background-color: #f2f2f2 !important;
+      background-color: #f2f2f2;
     `,
     lineColor: `
-      background-color: #bfbfbf !important;
+      background-color: #bfbfbf;
     `,
     backing: `
-      background-color: #ffffff !important;
+      background-color: #ffffff;
     `,
     underlined: `
-      border-bottom: 1px solid #70a2ff !important;
+      border-bottom: 1px solid #70a2ff;
     `,
     textColor: `
-      color: #737373 !important;
+      color: #737373;
     `,
     selectedTextColor: `
-      color: #292929 !important;
+      color: #292929;
     `,
     line: `
       position: absolute;
@@ -143,6 +160,7 @@ export default {
       height: 25px;
       min-width: 70px;
       top: 0px;
+      line-height: 14px;
     `,
     tabText: `
       position: relative;
