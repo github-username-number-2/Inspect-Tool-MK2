@@ -57,6 +57,12 @@ const toolUtils = {
     const tab = domUtils.getElementById("tab:" + tabName);
     tab.children[0].style.color = "#292929";
     tab.style.borderBottom = "1px solid #70a2ff";
+
+    for (const tabContent of domUtils.getElementById("tabContent").children) {
+      tabContent.style.display = "none";
+    }
+
+    domUtils.getElementById("tabContent:" + tabName).style.display = "block";
   },
 
   showTool() {
@@ -142,6 +148,7 @@ const toolUtils = {
   startConsoleResize() {
     const inspectTool = domUtils.getElementById("inspectTool");
     const consoleElement = domUtils.getElementById("console");
+    const tabContent = domUtils.getElementById("tabContent");
     const { y } = currentState.mouse;
     
     const topBarHeight = domUtils.getElementById("topBar").offsetHeight,
@@ -166,6 +173,7 @@ const toolUtils = {
       }
 
       consoleElement.style.height = scheduledHeight + "px";
+      tabContent.style.height = height - scheduledHeight - topBarHeight - bottomBarHeight - resizeHeight + "px";
     }, 10);
     mouseIntervals.push(interval);
   },

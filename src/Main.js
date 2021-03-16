@@ -16,9 +16,13 @@ import toolUtils from "./ToolUtils.js";
       defaultSize.height,
     ],
   );
+
   //sets default console height from config
   domUtils.getElementById("console").style.height = defaultConsoleHeight + "px";
+  domUtils.getElementById("consoleResize").dispatchEvent(new Event("mousedown"));
+  setTimeout(toolUtils.stopAll, 10);
 
+  //creates reference to inspect tool dom element
   Object.defineProperty(navigator, "__InspectToolReferenceObject__", {
     configurable: false,
     enumerable: false,
@@ -27,9 +31,11 @@ import toolUtils from "./ToolUtils.js";
   });
 
   const tabContainer = domUtils.getElementById("tabContainer");
+  const tabContentContainer = domUtils.getElementById("tabContent");
 
   config.tabs.forEach((tab, index) => {
-    domUtils.createElement("tab", [tab.name, index], tabContainer);
+    domUtils.createElement("tab", [tab.name], tabContainer);
+    domUtils.createElement("tabContent", [tab.name], tabContentContainer);
   });
 
   toolUtils.initialize();

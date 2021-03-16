@@ -4,9 +4,6 @@ export default {
       name: "Elements",
     },
     {
-      name: "Console",
-    },
-    {
       name: "Network",
     },
     {
@@ -14,6 +11,9 @@ export default {
     },
     {
       name: "Application",
+    },
+    {
+      name: "About",
     },
   ],
 

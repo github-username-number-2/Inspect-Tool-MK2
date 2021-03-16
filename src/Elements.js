@@ -1,5 +1,4 @@
 import currentState from "./CurrentState.js";
-
 import images from "./Images.js";
 import domUtils from "./DOMUtils.js";
 import toolUtils from "./ToolUtils.js";
@@ -7,7 +6,7 @@ import toolUtils from "./ToolUtils.js";
 //the DOM tree of the inspect tool
 export default {
   inspectTool: {
-    //identifier used for object, id attribute will not be set
+    //optional, identifier used for object, id attribute will not be set
     id: "inspectTool",
 
     //name of element tag
@@ -48,10 +47,13 @@ export default {
             classes: ["absolute"],
             properties: { src: images.closeTool },
             initialize: element => {
-              element.addEventListener("mousedown", () => {
+              element.addEventListener("mousedown", event => {
+                event.stopPropagation();
+              });
+              element.addEventListener("mouseover", () => {
                 element.style.opacity = "0.5";
               });
-              element.addEventListener("mouseup", () => {
+              element.addEventListener("mouseout", () => {
                 element.style.opacity = "0.7";
               });
               element.addEventListener("click", () => {
@@ -116,6 +118,10 @@ export default {
             type: "div",
             classes: ["absolute"],
           },
+          {
+            id: "toolOptionsContainer",
+            type: "div",
+          },
         ],
       },
       {
@@ -140,6 +146,10 @@ export default {
             },
           },
         ],
+      },
+      {
+        id: "tabContent",
+        type: "div",
       },
       {
         id: "consoleContainer",
@@ -170,6 +180,23 @@ export default {
                 type: "textarea",
                 initialize: element => {
                   element.setAttribute("spellcheck", "false");
+                  element.addEventListener("keydown", event => {
+                    if (event.code === "Enter") {
+                      event.preventDefault();
+                      
+                      if (event.shiftKey) {
+                        const text = element.value,
+                          start = element.selectionStart,
+                          end = element.selectionEnd;
+
+                        element.value = text.slice(0, start) + "\n" + text.slice(end);
+                        element.setSelectionRange(end + 1, end + 1)
+                      } else {
+                        domUtils.injectCode(element.value, window);
+                        element.value = "";
+                      }
+                    }
+                  });
                 },
               },
             ],
@@ -182,7 +209,7 @@ export default {
   tab: {
     type: "div",
     classes: ["tab"],
-    initialize: (tab, name, index) => {
+    initialize: (tab, name) => {
       domUtils.createElement(
         {
           type: "p",
@@ -217,4 +244,18 @@ export default {
       });
     },
   },
+
+  tabContent: {
+    type: "div",
+    classes: ["tabContent"],
+    initialize: (element, name) => {
+      element.innerHTML = name;
+
+      domUtils.assignID(element, "tabContent:" + name);
+    },
+  },
+
+  "Elements": [
+    //
+  ],
 };

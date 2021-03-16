@@ -1,7 +1,9 @@
 /*
 functions manipulated:
-  console.log
-  console.error
+  
+
+loggers set:
+  
 */
 export default {
   setLoggers(targetWindow) {

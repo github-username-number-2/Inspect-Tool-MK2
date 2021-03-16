@@ -4,8 +4,9 @@ let start;
 
 //called when bookmark is clicked
 (start = () => {
-  const tool = navigator.__InspectToolReferenceObject__;
-  if (tool) {
+  if (navigator.__InspectToolReferenceObject__) {
+    const tool = navigator.__InspectToolReferenceObject__;
+    
     if (tool.style.display === "none") {
       tool.style.display = "block";
     } else {
