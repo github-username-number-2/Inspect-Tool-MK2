@@ -19,6 +19,9 @@ const toolUtils = {
     domUtils.addEventListener("mouseup", event => {
       //stops all mousemove events
       this.stopAll();
+
+      //hides tool options
+      domUtils.getElementById("toolOptionsContainer").style.display = "none";
     }, window);
 
     //gets list of all events
@@ -189,10 +192,10 @@ const toolUtils = {
     for (const tool of config.toolOptions) {
       if (tool.name === optionName) {
         tool.func();
+        
+        break;
       }
     }
-
-    domUtils.getElementById("toolOptionsContainer").style.display = "none";
   },
 };
 

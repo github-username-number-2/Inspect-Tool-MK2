@@ -73,7 +73,10 @@ export default {
               element.addEventListener("mouseout", () => {
                 element.style.opacity = "0.7";
               });
-              element.addEventListener("click", event => {
+              element.addEventListener("mousedown", event => {
+                event.stopPropagation();
+              });
+              element.addEventListener("mouseup", event => {
                 event.stopPropagation();
 
                 const div = domUtils.getElementById("toolOptionsContainer");
