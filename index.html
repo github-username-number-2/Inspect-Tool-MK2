@@ -6,7 +6,9 @@
 	<meta name="viewport" content="width=device-width">
 	<title>javascript inspect tool</title>
 	<style>
-		/**/
+		#spacer {
+      height: 150vh;
+    }
 	</style>
 </head>
 
@@ -17,7 +19,11 @@
   <p id="errortext"></p>
   <button id="newButton">new inspect</button>
   <a id="newLink">Inspect Tool MK2</a>
+  <br>
   <a href="dist/main.js" target="_blank">source code</a>
+  <p>After tool is cleared, link needs to be used to re-initialize because modules can't be imported twice</p>
+
+  <div id="spacer"></div>
 
   <script src="original/start.js"></script>
   <script src="src/Start.js" type="module"></script>

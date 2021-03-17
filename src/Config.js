@@ -1,3 +1,5 @@
+import toolUtils from "./ToolUtils.js";
+
 export default {
   tabs: [
     {
@@ -14,6 +16,23 @@ export default {
     },
     {
       name: "About",
+    },
+  ],
+  
+  toolOptions: [
+    {
+      name: "clearInspectTool",
+      text: "Clear Inspect Tool",
+      func: () => {
+        toolUtils.clearTool();
+      },
+    },
+    {
+      name: "stopPageLoad",
+      text: "Stop Page Load",
+      func: () => {
+        stop();
+      },
     },
   ],
 

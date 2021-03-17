@@ -121,6 +121,7 @@ export default {
       border: none;
       resize: none;
       overflow-x: hidden;
+      font-family: monospace;
       font-size: 12px;
       color: #292929;
     `,
@@ -134,7 +135,12 @@ export default {
     `,
 
     toolOptionsContainer: `
+      display: none;
       position: absolute;
+      right: 30px;
+      top: 22px;
+      border: 1px solid #bfbfbf;
+      background-color: #ffffff;
     `,
   },
 
@@ -174,9 +180,12 @@ export default {
     tab: `
       display: inline-block;
       position: relative;
-      min-width: 70px;
+      width: auto;
+      min-width: 60px;
       height: 25px;
       top: 0px;
+      padding-left: 10px;
+      padding-right: 10px;
     `,
     tabText: `
       position: relative;
@@ -186,15 +195,26 @@ export default {
       color: #737373;
       line-height: 14px;
       padding: 0px;
-      margin: 11px;
+      margin-top: 11px;
       top: -6px;
     `,
     tabContent: `
       display: none;
+      position: absolute;
     `,
 
     toolOption: `
-      
+      position: relative;
+      width: 120px;
+      height: 30px;
+    `,
+    toolOptionText: `
+      position: relative;
+      top: 8px;
+      margin: 0px;
+      font-size: 10px;
+      color: #292929;
+      text-align: center;
     `,
   },
 };

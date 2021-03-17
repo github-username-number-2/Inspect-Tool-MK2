@@ -18,13 +18,35 @@ import toolUtils from "./ToolUtils.js";
   );
 
   //sets default console height from config
-  domUtils.getElementById("console").style.height = defaultConsoleHeight + "px";
-  domUtils.getElementById("consoleResize").dispatchEvent(new Event("mousedown"));
-  setTimeout(toolUtils.stopAll, 10);
+  (() => {
+    const inspectTool = domUtils.getElementById("inspectTool");
+    const consoleElement = domUtils.getElementById("console");
+    const tabContent = domUtils.getElementById("tabContent");
+    
+    const topBarHeight = domUtils.getElementById("topBar").offsetHeight,
+      bottomBarHeight = domUtils.getElementById("bottomBar").offsetHeight,
+      resizeHeight = domUtils.getElementById("consoleResize").offsetHeight;
+
+    const height = inspectTool.offsetHeight;
+    
+    const maxHeight = height - topBarHeight - bottomBarHeight - resizeHeight;
+
+    let scheduledHeight = defaultConsoleHeight;
+
+    if (scheduledHeight < 0) {
+      scheduledHeight = 0;
+    }
+    if (scheduledHeight > maxHeight) {
+      scheduledHeight = maxHeight;
+    }
+
+    consoleElement.style.height = scheduledHeight + "px";
+    tabContent.style.height = height - scheduledHeight - topBarHeight - bottomBarHeight - resizeHeight + "px";
+  })();
 
   //creates reference to inspect tool dom element
   Object.defineProperty(navigator, "__InspectToolReferenceObject__", {
-    configurable: false,
+    configurable: true,
     enumerable: false,
     writable: false,
     value: inspectTool,
@@ -32,10 +54,14 @@ import toolUtils from "./ToolUtils.js";
 
   const tabContainer = domUtils.getElementById("tabContainer");
   const tabContentContainer = domUtils.getElementById("tabContent");
+  const toolOptionsContainer = domUtils.getElementById("toolOptionsContainer");
 
-  config.tabs.forEach((tab, index) => {
+  config.tabs.forEach(tab => {
     domUtils.createElement("tab", [tab.name], tabContainer);
     domUtils.createElement("tabContent", [tab.name], tabContentContainer);
+  });
+  config.toolOptions.forEach(option => {
+    domUtils.createElement("toolOption", [option.name, option.text], toolOptionsContainer);
   });
 
   toolUtils.initialize();

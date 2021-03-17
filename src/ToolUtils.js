@@ -7,15 +7,6 @@ const mouseIntervals = [];
 
 const events = [];
 
-(() => {
-  const allowedEvents = config.allowedEvents;
-  for (const key in document.createElement("p")) {
-    if (key.indexOf("on") === 0 && !allowedEvents.includes(key.slice(2))) {
-      events.push(key.slice(2));
-    }
-  }
-})();
-
 const toolUtils = {
   initialize() {
     const inspectTool = domUtils.getElementById("inspectTool");
@@ -26,8 +17,17 @@ const toolUtils = {
       currentState.mouse.y = event.clientY;
     }, window);
     domUtils.addEventListener("mouseup", event => {
+      //stops all mousemove events
       this.stopAll();
     }, window);
+
+    //gets list of all events
+    const allowedEvents = config.allowedEvents;
+    for (const key in document.createElement("p")) {
+      if (key.indexOf("on") === 0 && !allowedEvents.includes(key.slice(2))) {
+        events.push(key.slice(2));
+      }
+    }
 
     for (const eventName of events) {
       inspectTool.addEventListener(eventName, event => {
@@ -44,6 +44,8 @@ const toolUtils = {
     domUtils.clearEventListeners();
 
     inspectTool.parentElement.removeChild(inspectTool);
+
+    delete navigator.__InspectToolReferenceObject__;
   },
 
   switchTabs(tabName) {
@@ -99,7 +101,7 @@ const toolUtils = {
       if (scheduledY + inspectTool.offsetHeight > screenHeight) {
         scheduledY = screenHeight - inspectTool.offsetHeight;
       }
- 
+
       inspectTool.style.left = scheduledX + "px";
       inspectTool.style.top = scheduledY + "px";
     }, 10);
@@ -150,12 +152,12 @@ const toolUtils = {
     const consoleElement = domUtils.getElementById("console");
     const tabContent = domUtils.getElementById("tabContent");
     const { y } = currentState.mouse;
-    
+
     const topBarHeight = domUtils.getElementById("topBar").offsetHeight,
       bottomBarHeight = domUtils.getElementById("bottomBar").offsetHeight,
       resizeHeight = domUtils.getElementById("consoleResize").offsetHeight,
       consoleTop = domUtils.getElementById("consoleContainer").offsetTop;
-    
+
     const top = inspectTool.offsetTop,
       height = inspectTool.offsetHeight;
     const distanceY = y - (top + consoleTop);
@@ -181,6 +183,16 @@ const toolUtils = {
     for (const id of mouseIntervals) {
       clearInterval(mouseIntervals.pop());
     }
+  },
+
+  runToolOption(optionName) {
+    for (const tool of config.toolOptions) {
+      if (tool.name === optionName) {
+        tool.func();
+      }
+    }
+
+    domUtils.getElementById("toolOptionsContainer").style.display = "none";
   },
 };
 

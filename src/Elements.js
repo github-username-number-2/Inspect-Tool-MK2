@@ -73,6 +73,12 @@ export default {
               element.addEventListener("mouseout", () => {
                 element.style.opacity = "0.7";
               });
+              element.addEventListener("click", event => {
+                event.stopPropagation();
+
+                const div = domUtils.getElementById("toolOptionsContainer");
+                div.style.display = div.style.display === "none" ? "block" : "none";
+              });
             },
           },
           {
@@ -117,10 +123,6 @@ export default {
             id: "tabContainer",
             type: "div",
             classes: ["absolute"],
-          },
-          {
-            id: "toolOptionsContainer",
-            type: "div",
           },
         ],
       },
@@ -183,7 +185,7 @@ export default {
                   element.addEventListener("keydown", event => {
                     if (event.code === "Enter") {
                       event.preventDefault();
-                      
+
                       if (event.shiftKey) {
                         const text = element.value,
                           start = element.selectionStart,
@@ -202,6 +204,10 @@ export default {
             ],
           },
         ],
+      },
+      {
+        id: "toolOptionsContainer",
+        type: "div",
       },
     ],
   },
@@ -252,6 +258,33 @@ export default {
       element.innerHTML = name;
 
       domUtils.assignID(element, "tabContent:" + name);
+    },
+  },
+
+  toolOption: {
+    type: "div",
+    classes: ["toolOption"],
+    initialize: (option, name, text) => {
+      domUtils.createElement(
+        {
+          type: "p",
+          classes: ["toolOptionText"],
+          properties: { innerHTML: text },
+        },
+        [],
+        option,
+      );
+
+      option.addEventListener("mouseover", () => {
+        option.style.backgroundColor = "#e8e8e8";
+      });
+      option.addEventListener("mouseout", () => {
+        option.style.backgroundColor = "";
+      });
+
+      option.addEventListener("click", () => {
+        toolUtils.runToolOption(name);
+      });
     },
   },
 
